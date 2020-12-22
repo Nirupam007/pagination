@@ -79,6 +79,7 @@ export class HabitatPagination {
                 else {
                     this._pages.push(<a>{i}</a>);
                 }
+
             };
             this._pages.push(<a onClick={() => this.next()} class={this._pages.length === this._currentPage ? 'isDisabled' : ''}>{this.forwardText}</a>);
             // class={`${((this._currentPage === this._pages.length - 2) ? 'disableClick' : '')}`}
