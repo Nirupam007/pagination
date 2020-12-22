@@ -8,7 +8,9 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface HPagination {
         "backwardText": string;
+        "currentPage": number;
         "forwardText": string;
+        "pageSize": number;
         "pageSizes": Number[] | string;
         "totalItems": number;
         "type": string;
@@ -133,7 +135,9 @@ declare global {
 declare namespace LocalJSX {
     interface HPagination {
         "backwardText"?: string;
+        "currentPage"?: number;
         "forwardText"?: string;
+        "pageSize"?: number;
         "pageSizes"?: Number[] | string;
         "totalItems"?: number;
         "type"?: string;

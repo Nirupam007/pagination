@@ -1,4 +1,4 @@
-import { Component, h, State, Prop, Watch, Element } from "@stencil/core";
+import { Component, h, Prop, Watch, Element } from "@stencil/core";
 
 
 @Component({
@@ -18,11 +18,10 @@ export class HabitatPagination {
 
     @Element() li: HTMLLIElement;
     _pages: any[] = [];
-    @State() _currentPage = 1;
+    @Prop({ reflect: true, mutable: true }) currentPage: number;
     how_many: number;
-    @State() rows: number;
-    @State() noOfbuttons: number;
-    @State() Isdisabled: boolean;
+    @Prop() pageSize: number;
+    private noOfbuttons: number;
     private selectEle: HTMLSelectElement;
     private firstOption: any;
 
@@ -39,31 +38,31 @@ export class HabitatPagination {
     }
 
 
-
     componentDidLoad() {
         if (this.selectEle && this.selectEle.length !== 0) {
             for (let i = 0; i <= this.selectEle.length || 0; i++) {
                 this.firstOption = this.selectEle.options[0].value;
             }
-            this.rows = this.firstOption;
-            console.log("This is this rows val ===> ", this.rows);
-            this.generateList(this.rows);
+            this.pageSize = this.firstOption;
+            console.log("This is this rows val ===> ", this.pageSize);
+            this.generateList(this.pageSize);
+
         }
     }
 
     next() {
-        if (this._currentPage !== this._pages.length - 1) {
-            this._currentPage += 1;
+        if (this.currentPage !== this._pages.length - 2) {
+            this.currentPage += 1;
         }
-        console.log(" Next Current ===> ", this._currentPage + " Total Page ===> ", this._pages.length - 2);
-        { this.Isdisabled ? "On" : "Off" }
+        console.log(" Next Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
+
     }
 
     previous() {
-        if (this._currentPage >= 1) {
-            this._currentPage -= 1;
+        if (this.currentPage >= 1) {
+            this.currentPage -= 1;
         }
-        console.log(" Previous Current ===> ", this._currentPage + " Total Page ===> ", this._pages.length - 2);
+        console.log(" Previous Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
     }
 
 
@@ -71,17 +70,18 @@ export class HabitatPagination {
     generateList(how_many = 10) {
 
         if (how_many && how_many > 0) {
-            this._pages.push(<a onClick={() => this.previous()}>{this.backwardText}</a>);
+            this._pages.push(<a onClick={() => this.previous()} class={this.currentPage === 1 ? 'isDisabled' : ''}>{this.backwardText}</a>);
             for (let i = 1; i <= how_many; i++) {
-                if (i === this._currentPage) {
-                    this._pages.push(<a class="active">{i}</a>);
+                if (i === this.currentPage) {
+                    this._pages.push(<a class={(i === this.currentPage) ? 'active' : ''}>{i}</a>);
                 }
                 else {
                     this._pages.push(<a>{i}</a>);
                 }
-                // Checking this 999
             };
-            this._pages.push(<a onClick={() => this.next()} class={this._pages.length === this._currentPage ? 'isDisabled' : ''}>{this.forwardText}</a>);
+
+            console.log(this._pages.length - 1, " = ", this.currentPage);
+            this._pages.push(<a onClick={() => this.next()} class={this._pages.length - 1 === this.currentPage ? 'isDisabled' : ''}>{this.forwardText}</a>);
             // class={`${((this._currentPage === this._pages.length - 2) ? 'disableClick' : '')}`}
         }
     }
@@ -91,15 +91,15 @@ export class HabitatPagination {
     // }
 
     componentWillLoad() {
+        this.noOfbuttons = Math.round(this.totalItems / +this.pageSize);
         this.fetchPageSizeOptions(this.pageSizes);
-        this.generateList(this.rows);
+        this.generateList(this.noOfbuttons);
     }
 
 
     calculateRows(event) {
-        this.rows = event.target.value;
-        this.noOfbuttons = Math.round(this.totalItems / +this.rows);
-        console.log("Rows ==> ", this.rows);
+        this.pageSize = event.target.value;
+        console.log("Rows ==> ", this.pageSize);
     }
 
 
@@ -134,7 +134,7 @@ export class HabitatPagination {
                         </select>
                     </div>
                     <div class="results-area">
-                        <div class="info-gap">Results: 1 - {this.rows} of {this.totalItems} items</div>
+                        <div class="info-gap">Results: 1 - {this.pageSize} of {this.totalItems} items</div>
                         <div class="icon-placeholder">
                             <span>B</span>
                             <span>F</span>
