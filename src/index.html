@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+  <title>Stencil Component Starter</title>
+
+  <script type="module" src="/build/firstcomponent.esm.js"></script>
+  <script nomodule src="/build/firstcomponent.js"></script>
+  <link rel="stylesheet" type="text/css" href="./assets/habitat-global.css" />
+  <style>
+    :root {
+      --error: #a94442;
+      --success: #3c763d;
+      --warning: #8a6d3b;
+    }
+
+    body {
+      box-sizing: border-box;
+      /*background-image: url("assets/ux.jpg");*/
+      font-family: Inter, arial, "Helvetica Neue", helvetica, sans-serif;
+    }
+
+
+
+    /* nav {
+      margin: 0 2rem;
+    }
+
+    nav ul {
+      display: block;
+      list-style: none;
+    }
+
+    nav ul li {
+      padding: 0.35rem 0.57rem;
+      margin: 0;
+    }
+
+    nav ul li a {
+      font-family: inherit;
+      font-size: 16px;
+      color: #000;
+      text-decoration: none;
+    }
+
+    nav ul li a:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    plrs-tooltip a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    plrs-tooltip a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      display: block;
+      margin-top: 5px;
+    }
+
+    .error {
+      color: var(--error);
+    }
+
+    .success {
+      color: var(--success);
+    }
+
+    .success {
+      color: var(--warning);
+    } */
+    .test {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .test>div {
+      margin: 10px;
+    }
+
+    #message {
+      font-size: 12px;
+      margin: 5px 0 0 10px;
+      font-weight: 600;
+      color: #000;
+      background: #f3f3f3;
+      border-radius: 5px;
+      padding: 5px 10px;
+      opacity: 0;
+      transition: opacity 0.4s;
+      -webkit-transition: opacity 0.4s;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h-pagination type="default-text" page-sizes="[10,20,30,40,50]" total-items="200"></h-pagination>
+
+  <!-- <radio-checkbox-toggle type="checkbox" name="What is this" value="What is this">
+    <span name="helper">sfdfsf sdad</span>
+  </radio-checkbox-toggle> -->
+
+  <!-- <select id="select-type" onchange="change()">
+    <option value="invoice">Invoice</option>
+    <option value="payment">Payment</option>
+  </select>
+
+
+
+
+  <plrs-card-component object-attribute='{"name":"Shamaal","age":38}'> </plrs-card-component> -->
+
+
+  <!-- <toggle-switch text="Blootooth"></toggle-switch>
+  <toggle-switch text="Air Drop some more"></toggle-switch>
+  <toggle-switch text="Mini Enabled" size="mini"></toggle-switch>
+  <toggle-switch text="Mini disabled some more text" size="mini" disabled></toggle-switch> -->
+  <!-- <div class="test">
+    <div>
+      <toggle-switch text="Using In-build Methods" id="toggle-switch-2" onmouseout="makeSandwhich()"
+        onmouseover="handleOn()">
+      </toggle-switch>
+    </div>
+    <div>
+      <toggle-switch text="Using Custom Event" checked id="toggle-switch-1" onclick="handleChange_1()">
+      </toggle-switch>
+    </div>
+    <div>
+      <toggle-switch text="Disabled " disabled>
+      </toggle-switch>
+    </div>
+    <div>
+      <toggle-switch text="Mini" checked size="mini">
+      </toggle-switch>
+    </div>
+  </div> -->
+
+
+
+  <!-- <plrs-tooltip text="This is the Tooltip Content...">
+    <a href="#">Meaning of life!</a>
+  </plrs-tooltip> -->
+
+
+
+
+
+  <!-- <button id="btn-open">Open Drawer</button>
+  <plrs-side-drawer title="My Drawer...">
+    <nav>
+      <h2>Links</h2>
+      <ul>
+        <li><a href="#">A link </a></li>
+        <li><a href="#">Another link </a></li>
+        <li><a href="#">Another another link</a></li>
+      </ul>
+    </nav>
+
+  </plrs-side-drawer> -->
+
+  <!--placeholder="Enter text" label="" error disabled-->
+
+  <!-- <plrs-toggle-input element="textarea" labeltext="Name" value="Nirupam barman" placeholder="Any number">
+    <div class="message error">Error: There is a error!</div>
+    <div class="message success">Success: There is a error!</div>
+  </plrs-toggle-input> -->
+  <!-- 
+  <plrs-toggle-input element="number" labeltext="Name" value="" placeholder="Enter Number" min="1" max="5" step="2">
+    <div class="message error">Error: There is a error!</div>
+  </plrs-toggle-input>
+
+  <plrs-toggle-input element="textarea" labeltext="Address" placeholder="Type your address">
+    <div class="message error">Error: There is a error!</div>
+  </plrs-toggle-input>
+
+  <plrs-toggle-input element="color" value="#000" labeltext="Select color:"></plrs-toggle-input>
+
+  <plrs-toggle-input element="date" value="#000" labeltext="Select Date:"></plrs-toggle-input>
+  <plrs-toggle-input element="file" value="#000" labeltext="Select a file:">
+    <div class="message error">Error: There is a error!</div>
+  </plrs-toggle-input>
+  <plrs-toggle-input element="button" value="Submit">
+    <div class="message error">Error: There is a error!</div>
+  </plrs-toggle-input> -->
+
+
+
+
+
+
+  <script>
+
+    // // Usage when dom loaded and turn on switch 
+    // document.addEventListener('DOMContentLoaded', (event) => {
+    //   //the event occurred
+    //   const toggleBtn2 = document.querySelector("#toggle-switch-2");
+    //   toggleBtn2.turnOn();
+    // });
+
+
+    // // using own App method and using component method to do something 
+    // function makeSandwhich() {
+    //   // Like while making sandwhich I want to turn off the gas
+    //   const toggleBtn2 = document.querySelector("#toggle-switch-2");
+    //   toggleBtn2.turnOff();
+
+    // }
+    // function handleOn() {
+
+    //   const toggleBtn2 = document.querySelector("#toggle-switch-2");
+    //   toggleBtn2.turnOn();
+
+    // }
+    // // Another way to handle the switch is using 'toggle' event
+    // function handleChange_1() {
+    //   const toggleBtn1 = document.querySelector("#toggle-switch-1");
+
+    //   toggleBtn1.addEventListener('toggle', (e) => {
+    //     e.stopImmediatePropagation();
+    //     if (e.detail.switchStatus === true) {
+    //       console.log("Switch is : ON");
+    //     } else {
+    //       console.log("Switch is : OFF");
+    //     }
+
+    //   });
+    // }
+
+    // One way is to use In-build method 
+
+
+
+
+
+
+    // document.addEventListener('toggle', (e) => {
+    //   console.log(e);
+    //   const message = document.querySelector('#message');
+
+    //   function animate(text, bgColor) {
+    //     message.style.opacity = "1";
+    //     message.style.backgroundColor = bgColor;
+    //     message.innerHTML = text;
+    //     this.setTimeout(() => {
+    //       message.style.opacity = "0";
+    //     }, 1000);
+    //   }
+
+    //   if (e.detail.switchStatus === true) {
+    //     animate('ON', '#d5f5ff');
+    //   } else {
+    //     animate('OFF', '#e0e0e0');
+    //   }
+    // });
+
+
+    // const type = document.querySelector("#select-type");
+    // function change() {
+    //   console.log(type.value)
+    // }
+
+
+    // const drawer = document.querySelector("plrs-side-drawer")
+    // const button = document.querySelector("#btn-open");
+
+
+    // // setTimeout(() => {
+    // //   drawer.setAttribute("heading", "New Title Change");
+    // // }, 3000)
+
+    // button.addEventListener("click", () => {
+    //   if (!drawer.opened) {
+    //     drawer.opened = true;
+    //   }
+    // });
+  </script>
+</body>
+
+</html>

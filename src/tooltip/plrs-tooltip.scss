@@ -1,0 +1,27 @@
+
+.tooltext{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:13px;
+    padding: 0.4rem;
+    background: #000;
+    border-radius: 5px;
+    color:#fff;
+    position: absolute;
+    top: 30px;
+    left: -4px;
+    display: block;
+}
+.triangle{
+    position: absolute;
+    top:-12px;
+    left:40%;
+    width:0px;
+    height:0px;
+    border-left:10px solid transparent;
+    border-right:10px solid transparent;
+    border-bottom:12px solid #000;
+}
+.tool-container{
+    position: relative;
+}
+

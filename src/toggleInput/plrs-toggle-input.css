@@ -1,0 +1,44 @@
+html {
+    font-family: Arial, Helvetica, sans-serif;
+    margin:0;
+    padding:0;
+}
+input[type='text'],input[type='date'],textarea{
+    font-family: Arial, Helvetica, sans-serif;
+    border:solid 1px #e5e5e5;
+    padding:0.64rem;
+    margin:0 0 0.23rem 0;
+    border-radius:5px;
+}
+input[type='text'],input[type='number'],input[type='date'],textarea:focus{
+    outline-color: #666;
+}
+input[type="number"] {
+    border: 1px solid #e5e5e5;
+    border-color: rgb(139, 139, 139) #ECECEC #ECECEC #BBB;
+    padding: .4rem;
+    border-radius:5px;
+}
+
+
+label{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:14px;
+    margin: 0 0.23rem 0.23rem 0;
+}
+
+.container{
+    display:flex;
+    margin: 0 0 0.8rem 0;
+    flex-direction:  row;
+    justify-content: left;
+    align-items: flex-start;
+}
+
+.container:first-of-type{
+    margin-top:0.85rem;
+}
+input[disabled] {
+    pointer-events: none;
+    cursor: disabled;
+}

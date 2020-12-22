@@ -1,0 +1,104 @@
+:host{
+    --text-tab-color:var(--text-muted);
+    --height:var(--input-height);
+    --padding-left:var(--input-btn-padding-x);
+    --padding-right:var(--input-btn-padding-x);
+    --text-size:var(--text-size);
+    --tab-gap:var(--spacer-3);
+
+    --active-tab : var(--primary-bg-color);
+    --tab-text-color:var(--color-white);
+    font-size: small;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    --disabled:var(--opacity-disabled);
+}
+
+
+.normal {
+    display: block;
+    min-width: 50%;
+  }
+  .page-header {
+    font-size: 1.5em;
+    font-weight: normal;
+    border-bottom: 1px solid #ddd;
+    margin: 30px 0
+  }
+  .pagination {
+    margin: 10px 0;
+    padding: 0;
+  }
+  .pagination li {
+    display: inline;
+    margin: 0 5px;
+  }
+  .pagination li a {
+    display: inline-block;
+    text-decoration: none;
+    padding: 5px 10px;
+    color: #000
+  }
+  
+  /* Active and Hoverable Pagination */
+  .pagination li a {
+    border-radius: 5px;
+    -webkit-transition: background-color 0.3s;
+    transition: background-color 0.3s      
+  }
+  .pagination li a.icon-placeholder{    
+    background: #e0e0e0;
+  }
+  .pagination li a.active {
+    background-color: var(--active-tab);
+    color: var(--tab-text-color);    
+    cursor: pointer;
+  }
+ .pagination li a:hover:not(.active) {
+    background-color: #ddd;    
+    cursor: pointer;
+  } 
+  
+
+
+
+ /* Table style pagination */
+
+.table-compact{
+   display:inline-flex;
+   min-width:30%;
+   justify-content: space-between;
+   padding: 7px 20px;
+ }
+
+ 
+
+ .select-area,.results-area{
+   display:flex;
+   justify-content: center;
+   align-items: center;
+ }
+.info-gap{
+  margin-right: 5px;
+}
+  
+  .icon-placeholder span{
+    width: 20px;
+    height: 20px;
+    background: #e0e0e0;
+    padding: 5px 10px;
+    margin: 5px;
+    box-sizing: border-box;
+  }
+.icon-placeholder .count{
+  background: white;
+}
+.hidden{
+  display: none;
+}
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
