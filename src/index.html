@@ -103,7 +103,7 @@
 
 <body>
 
-  <h-pagination type="table" page-sizes="[10,20,30,40]" total-items="200" page-size="20" current-page="5">
+  <h-pagination type="table" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1" id="pagi">
   </h-pagination>
 
   <!-- <radio-checkbox-toggle type="checkbox" name="What is this" value="What is this">
@@ -199,6 +199,19 @@
 
 
   <script>
+
+    const paginationEle = document.querySelector("#pagi");
+
+    paginationEle.addEventListener('previousClicked', (e) => {
+      console.log(e.detail);
+    });
+
+    paginationEle.addEventListener('nextClicked', (e) => {
+      console.log(e.detail);
+
+    });
+
+
 
     // // Usage when dom loaded and turn on switch 
     // document.addEventListener('DOMContentLoaded', (event) => {

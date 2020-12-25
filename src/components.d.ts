@@ -10,8 +10,10 @@ export namespace Components {
         "backwardText": string;
         "currentPage": number;
         "forwardText": string;
+        "next": () => Promise<void>;
         "pageSize": number;
         "pageSizes": Number[] | string;
+        "previous": () => Promise<void>;
         "totalItems": number;
         "type": string;
     }
@@ -137,6 +139,8 @@ declare namespace LocalJSX {
         "backwardText"?: string;
         "currentPage"?: number;
         "forwardText"?: string;
+        "onNextClicked"?: (event: CustomEvent<any>) => void;
+        "onPreviousClicked"?: (event: CustomEvent<any>) => void;
         "pageSize"?: number;
         "pageSizes"?: Number[] | string;
         "totalItems"?: number;

@@ -1,4 +1,4 @@
-import { Component, h, Prop, Watch, Element } from "@stencil/core";
+import { Component, h, Prop, Watch, Element, Event, EventEmitter, Method } from "@stencil/core";
 
 
 @Component({
@@ -20,10 +20,25 @@ export class HabitatPagination {
     _pages: any[] = [];
     @Prop({ reflect: true, mutable: true }) currentPage: number;
     how_many: number;
-    @Prop() pageSize: number;
+    @Prop({ reflect: true }) pageSize: number;
     private noOfbuttons: number;
-    private selectEle: HTMLSelectElement;
-    private firstOption: any;
+    //private selectEle: HTMLSelectElement;
+    // private firstOption: any;
+    private _actualArrOnlyNumber: Number[] = [];
+    results = null;
+    @Event({
+        eventName: 'nextClicked',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+    }) nextClicked: EventEmitter;
+
+    @Event({
+        eventName: 'previousClicked',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+    }) previousClicked: EventEmitter;
 
 
     @Watch('pageSizes')
@@ -39,35 +54,77 @@ export class HabitatPagination {
 
 
     componentDidLoad() {
-        if (this.selectEle && this.selectEle.length !== 0) {
-            for (let i = 0; i <= this.selectEle.length || 0; i++) {
-                this.firstOption = this.selectEle.options[0].value;
-            }
-            this.pageSize = this.firstOption;
-            console.log("This is this rows val ===> ", this.pageSize);
-            this.generateList(this.pageSize);
-
-        }
+        this.nextSet(this.pageSize);
+        console.log("ComponentDidLoad gives ====>", this.pageSize);
     }
 
-    next() {
+
+    @Method()
+    async next() {
         if (this.currentPage !== this._pages.length - 2) {
             this.currentPage += 1;
         }
-        console.log(" Next Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
 
+        // console.log(" Next Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
+        const nextRemaining = (this.totalItems / this.pageSize) - this.currentPage;
+        const listEnd = this._pages.length - 2;
+        this.nextClicked.emit({
+            currentItem: this.currentPage,
+            nextRemaining,
+            listEnd,
+            pageSize: this.pageSize,
+            pageSizes: this.pageSizes,
+            totalItems: this.totalItems
+
+        })
     }
 
-    previous() {
+    @Method()
+    async previous() {
         if (this.currentPage >= 1) {
             this.currentPage -= 1;
         }
-        console.log(" Previous Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
+        // console.log(" Previous Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
+        const previousRemaining = this.currentPage - 1;
+        const listStart = 1;
+        this.previousClicked.emit({
+            currentItem: this.currentPage,
+            previousRemaining,
+            listStart,
+            pageSize: this.pageSize,
+            pageSizes: this.pageSizes,
+            totalItems: this.totalItems
+
+        })
     }
 
+    // Table Pagination logic 
+    nextSet(_itemsPerPage) {
+        debugger;
+        _itemsPerPage = this.pageSize;
+        console.log("_itemsPerPage ", _itemsPerPage);
+        console.log("this.pageSize ", this.pageSize);
+        for (let page = 1; page < _itemsPerPage; page++) {
+            this._actualArrOnlyNumber.push(page);
+        }
+
+        let _begin = _itemsPerPage * (this.currentPage - 1);
+        let _end = _itemsPerPage * this.currentPage;
+        let _slicedRows = [];
+        _slicedRows = this._actualArrOnlyNumber.slice(_begin, _end);
+        this.currentPage++;
+        console.log("Actual Arrays ", this._actualArrOnlyNumber);
+        console.log("Sliced Arrays ", _slicedRows);
+        console.log("Begin  ", _begin + "End ", _end);
+        this.results = (`Results : ${_begin + 1}  -  ${_end}  of  ${this.totalItems}`);
 
 
-    generateList(how_many = 10) {
+    }
+
+    previousSet() {
+
+    }
+    generateList(how_many) {
 
         if (how_many && how_many > 0) {
             this._pages.push(<a onClick={() => this.previous()} class={this.currentPage === 1 ? 'isDisabled' : ''}>{this.backwardText}</a>);
@@ -79,19 +136,14 @@ export class HabitatPagination {
                     this._pages.push(<a>{i}</a>);
                 }
             };
-
-            console.log(this._pages.length - 1, " = ", this.currentPage);
+            // console.log(this._pages.length - 1, " = ", this.currentPage);
             this._pages.push(<a onClick={() => this.next()} class={this._pages.length - 1 === this.currentPage ? 'isDisabled' : ''}>{this.forwardText}</a>);
-            // class={`${((this._currentPage === this._pages.length - 2) ? 'disableClick' : '')}`}
+
         }
     }
 
-    // componentDidUpdate() {
-    //     this.next();
-    // }
-
-    componentWillLoad() {
-        this.noOfbuttons = Math.round(this.totalItems / +this.pageSize);
+    componentWillLoad(): void {
+        this.noOfbuttons = Math.ceil(this.totalItems / +this.pageSize);
         this.fetchPageSizeOptions(this.pageSizes);
         this.generateList(this.noOfbuttons);
     }
@@ -99,14 +151,14 @@ export class HabitatPagination {
 
     calculateRows(event) {
         this.pageSize = event.target.value;
-        console.log("Rows ==> ", this.pageSize);
+        this.nextSet(this.pageSize);
+        console.log(" This is from select ==>", this.pageSize);
     }
 
 
     private PaginationContainer = null;
 
     render() {
-
         switch (this.type && this.type.toLowerCase().trim()) {
             case 'default-text':
                 this.PaginationContainer = (<div class="normal">
@@ -127,17 +179,17 @@ export class HabitatPagination {
                     <div class="select-area">
                         <div><span class="info-gap">{this.rowsPerPageText} :</span>
                         </div>
-                        <select onChange={(e) => this.calculateRows(e)} ref={el => this.selectEle = el as HTMLSelectElement}>
+                        <select onChange={(e) => this.calculateRows(e)}>
                             {this._pageSizes.map(_option =>
                                 <option value={JSON.stringify(_option)}>{_option}</option>
                             )}
                         </select>
                     </div>
                     <div class="results-area">
-                        <div class="info-gap">Results: 1 - {this.pageSize} of {this.totalItems} items</div>
+                        <div class="info-gap">{this.results}</div>
                         <div class="icon-placeholder">
-                            <span>B</span>
-                            <span>F</span>
+                            <span onClick={this.previousSet.bind(this)}>B</span>
+                            <span onClick={this.nextSet.bind(this)}>F</span>
                         </div>
                     </div>
                 </div>)
@@ -147,7 +199,7 @@ export class HabitatPagination {
                     <div class="select-area">
                         <div class="info-gap"><span>{this.rowsPerPageText} :</span>
                         </div>
-                        <select onChange={(e) => this.calculateRows(e)} ref={el => this.selectEle = el as HTMLSelectElement}>
+                        <select onChange={(e) => this.calculateRows(e)}>
                             {this._pageSizes.map(_option =>
                                 <option value={JSON.stringify(_option)}>{_option}</option>
                             )}
@@ -157,7 +209,7 @@ export class HabitatPagination {
                         <div class="icon-placeholder">
                             <span>BB</span>
                             <span>B</span>
-                            <span class="count">1/100</span>
+                            <span class="count">{this.currentPage / this.totalItems}</span>
                             <span>FF</span>
                             <span>F</span>
                         </div>
@@ -197,8 +249,6 @@ export class HabitatPagination {
         return (
             <div> {this.PaginationContainer}</div>
         )
-
         // Icon <h-icon class="size-lg" icon="chevron-right-solid" size="lg"></h-icon>
-
     }
 }
