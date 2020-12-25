@@ -100,7 +100,6 @@ export class HabitatPagination {
 
     // Table Pagination logic 
     nextSet(_itemsPerPage) {
-        debugger;
         _itemsPerPage = this.pageSize;
         console.log("_itemsPerPage ", _itemsPerPage);
         console.log("this.pageSize ", this.pageSize);
