@@ -54,6 +54,7 @@ export class HabitatPagination {
 
 
     componentDidLoad() {
+
         this.nextSet(this.pageSize);
         console.log("ComponentDidLoad gives ====>", this.pageSize);
     }
@@ -114,7 +115,7 @@ export class HabitatPagination {
         this.currentPage++;
         console.log("Actual Arrays ", this._actualArrOnlyNumber);
         console.log("Sliced Arrays ", _slicedRows);
-        console.log("Begin  ", _begin + "End ", _end);
+        console.log("Begin  ", _begin + 1, "End ", _end);
         this.results = (`Results : ${_begin + 1}  -  ${_end}  of  ${this.totalItems}`);
 
 
