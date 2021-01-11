@@ -66,7 +66,7 @@
 
 .table-compact{
    display:inline-flex;
-   min-width:30%;
+   width:100%;
    justify-content: space-between;
    padding: 7px 20px;
  }
@@ -102,4 +102,12 @@
   cursor: not-allowed;
   opacity: 0.5;
   text-decoration: none;
+  pointer-events: none;
+}
+
+button[disabled] {
+  pointer-events: none;
+  cursor: disabled;
+  opacity:0.5;
+  color:#e5e5e5;
 }

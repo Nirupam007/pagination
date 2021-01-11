@@ -22,12 +22,9 @@ export class ToggleSwitch {
 
     @Element() li: HTMLLIElement;
     _pages: any[] = [];
-    _currentPage = 1;
     how_many: number = 5;
 
-    componentWillLoad() {
-        this.generateList(this.how_many);
-    }
+
     private _dispatchAction() {
         this.on = !this.on;
         this.toggle.emit({ "switchStatus": this.on });
@@ -57,18 +54,6 @@ export class ToggleSwitch {
         console.log('Exposed Method turnOff() returns ==>' + this.checked);
     }
 
-    generateList(how_many) {
-        if (how_many && how_many > 0) {
-            for (let i = 0; i <= how_many; i++) {
-                if (i === this._currentPage) {
-                    this._pages.push(<a class="active">{i}</a>);
-                }
-                else {
-                    this._pages.push(<a>{i}</a>);
-                }
-            }
-        }
-    }
 
 
     render() {
@@ -88,10 +73,7 @@ export class ToggleSwitch {
                     </div>
                 </label>
 
-                {/* Ignore */}
-                <ul class="pagination">{this._pages.map(item =>
-                    <li>{item}</li>
-                )}</ul>
+
 
             </div>
 

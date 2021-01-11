@@ -158,20 +158,3 @@ input:checked + .slider:after {
   padding: 5px 10px;
   color: #000
 }
-
-/* Active and Hoverable Pagination */
-.pagination li a {
-  border-radius: 5px;
-  -webkit-transition: background-color 0.3s;
-  transition: background-color 0.3s      
-}
-.pagination li a.icon-placeholder{    
-  background: #e0e0e0;
-}
-.pagination li a.active {
-  background-color: var(--active-tab);
-  color: var(--tab-text-color);
-}
-.pagination li a:hover:not(.active) {
-  background-color: #ddd;
-} 

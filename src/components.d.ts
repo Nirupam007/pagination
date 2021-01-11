@@ -6,14 +6,20 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface HContent {
+    }
     interface HPagination {
         "backwardText": string;
+        "currentItem": (currentItem: any) => Promise<void>;
         "currentPage": number;
+        "disabled": boolean;
         "forwardText": string;
         "next": () => Promise<void>;
+        "nextSet": () => Promise<void>;
         "pageSize": number;
         "pageSizes": Number[] | string;
         "previous": () => Promise<void>;
+        "previousSet": () => Promise<void>;
         "totalItems": number;
         "type": string;
     }
@@ -71,6 +77,18 @@ export namespace Components {
          */
         "value": string;
     }
+    interface TabContent {
+    }
+    interface TabH {
+        "disabled": boolean;
+        "selected": boolean;
+        "type": string;
+    }
+    interface TabbingUi {
+        "isSelected": boolean;
+        "tabClicked": (e: any) => Promise<void>;
+        "type": string;
+    }
     interface ToggleSwitch {
         "checked": boolean;
         "name": string;
@@ -82,6 +100,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLHContentElement extends Components.HContent, HTMLStencilElement {
+    }
+    var HTMLHContentElement: {
+        prototype: HTMLHContentElement;
+        new (): HTMLHContentElement;
+    };
     interface HTMLHPaginationElement extends Components.HPagination, HTMLStencilElement {
     }
     var HTMLHPaginationElement: {
@@ -118,6 +142,24 @@ declare global {
         prototype: HTMLRadioCheckboxToggleElement;
         new (): HTMLRadioCheckboxToggleElement;
     };
+    interface HTMLTabContentElement extends Components.TabContent, HTMLStencilElement {
+    }
+    var HTMLTabContentElement: {
+        prototype: HTMLTabContentElement;
+        new (): HTMLTabContentElement;
+    };
+    interface HTMLTabHElement extends Components.TabH, HTMLStencilElement {
+    }
+    var HTMLTabHElement: {
+        prototype: HTMLTabHElement;
+        new (): HTMLTabHElement;
+    };
+    interface HTMLTabbingUiElement extends Components.TabbingUi, HTMLStencilElement {
+    }
+    var HTMLTabbingUiElement: {
+        prototype: HTMLTabbingUiElement;
+        new (): HTMLTabbingUiElement;
+    };
     interface HTMLToggleSwitchElement extends Components.ToggleSwitch, HTMLStencilElement {
     }
     var HTMLToggleSwitchElement: {
@@ -125,22 +167,32 @@ declare global {
         new (): HTMLToggleSwitchElement;
     };
     interface HTMLElementTagNameMap {
+        "h-content": HTMLHContentElement;
         "h-pagination": HTMLHPaginationElement;
         "plrs-card-component": HTMLPlrsCardComponentElement;
         "plrs-side-drawer": HTMLPlrsSideDrawerElement;
         "plrs-toggle-input": HTMLPlrsToggleInputElement;
         "plrs-tooltip": HTMLPlrsTooltipElement;
         "radio-checkbox-toggle": HTMLRadioCheckboxToggleElement;
+        "tab-content": HTMLTabContentElement;
+        "tab-h": HTMLTabHElement;
+        "tabbing-ui": HTMLTabbingUiElement;
         "toggle-switch": HTMLToggleSwitchElement;
     }
 }
 declare namespace LocalJSX {
+    interface HContent {
+    }
     interface HPagination {
         "backwardText"?: string;
         "currentPage"?: number;
+        "disabled"?: boolean;
         "forwardText"?: string;
+        "onCurrentClicked"?: (event: CustomEvent<any>) => void;
         "onNextClicked"?: (event: CustomEvent<any>) => void;
+        "onNextSetClicked"?: (event: CustomEvent<any>) => void;
         "onPreviousClicked"?: (event: CustomEvent<any>) => void;
+        "onPreviousSetClicked"?: (event: CustomEvent<any>) => void;
         "pageSize"?: number;
         "pageSizes"?: Number[] | string;
         "totalItems"?: number;
@@ -200,6 +252,19 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    interface TabContent {
+    }
+    interface TabH {
+        "disabled"?: boolean;
+        "onSelectBtn"?: (event: CustomEvent<any>) => void;
+        "selected"?: boolean;
+        "type"?: string;
+    }
+    interface TabbingUi {
+        "isSelected"?: boolean;
+        "onTabSelect"?: (event: CustomEvent<any>) => void;
+        "type"?: string;
+    }
     interface ToggleSwitch {
         "checked"?: boolean;
         "name"?: string;
@@ -209,12 +274,16 @@ declare namespace LocalJSX {
         "value"?: any;
     }
     interface IntrinsicElements {
+        "h-content": HContent;
         "h-pagination": HPagination;
         "plrs-card-component": PlrsCardComponent;
         "plrs-side-drawer": PlrsSideDrawer;
         "plrs-toggle-input": PlrsToggleInput;
         "plrs-tooltip": PlrsTooltip;
         "radio-checkbox-toggle": RadioCheckboxToggle;
+        "tab-content": TabContent;
+        "tab-h": TabH;
+        "tabbing-ui": TabbingUi;
         "toggle-switch": ToggleSwitch;
     }
 }
@@ -222,12 +291,16 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "h-content": LocalJSX.HContent & JSXBase.HTMLAttributes<HTMLHContentElement>;
             "h-pagination": LocalJSX.HPagination & JSXBase.HTMLAttributes<HTMLHPaginationElement>;
             "plrs-card-component": LocalJSX.PlrsCardComponent & JSXBase.HTMLAttributes<HTMLPlrsCardComponentElement>;
             "plrs-side-drawer": LocalJSX.PlrsSideDrawer & JSXBase.HTMLAttributes<HTMLPlrsSideDrawerElement>;
             "plrs-toggle-input": LocalJSX.PlrsToggleInput & JSXBase.HTMLAttributes<HTMLPlrsToggleInputElement>;
             "plrs-tooltip": LocalJSX.PlrsTooltip & JSXBase.HTMLAttributes<HTMLPlrsTooltipElement>;
             "radio-checkbox-toggle": LocalJSX.RadioCheckboxToggle & JSXBase.HTMLAttributes<HTMLRadioCheckboxToggleElement>;
+            "tab-content": LocalJSX.TabContent & JSXBase.HTMLAttributes<HTMLTabContentElement>;
+            "tab-h": LocalJSX.TabH & JSXBase.HTMLAttributes<HTMLTabHElement>;
+            "tabbing-ui": LocalJSX.TabbingUi & JSXBase.HTMLAttributes<HTMLTabbingUiElement>;
             "toggle-switch": LocalJSX.ToggleSwitch & JSXBase.HTMLAttributes<HTMLToggleSwitchElement>;
         }
     }

@@ -14,7 +14,8 @@ export class SideDrawer {
         this.opened = false;
     }
     _handleTabClick(content: string) {
-        this.showContact = content === 'contact';
+        // this.showContact = content === 'contact';
+        console.log(content)
     }
     render() {
         let mainContent = <slot />;

@@ -1,4 +1,4 @@
-import { Component, h, Prop, Watch, Element, Event, EventEmitter, Method } from "@stencil/core";
+import { Component, h, Prop, Watch, Element, Event, EventEmitter, Method, State } from "@stencil/core";
 
 
 @Component({
@@ -10,7 +10,7 @@ export class HabitatPagination {
 
     @Prop() type: string;
     @Prop({ reflect: true }) pageSizes: Number[] | string;
-    private _pageSizes: Number[];
+    private _pageSizes: Array<Number>;
     @Prop() totalItems: number;
     @Prop() backwardText: string = "Previous";
     @Prop() forwardText: string = "Next";
@@ -25,6 +25,14 @@ export class HabitatPagination {
     //private selectEle: HTMLSelectElement;
     // private firstOption: any;
     private _actualArrOnlyNumber: Number[] = [];
+    @Prop({ reflect: true }) disabled: boolean;
+
+    @State() startLength: number;
+    @State() endLength: number;
+    _slicedRows: Number[] = [];
+
+    @State() slicedRowsRange: Number[] = [];
+
     results = null;
     @Event({
         eventName: 'nextClicked',
@@ -40,6 +48,27 @@ export class HabitatPagination {
         bubbles: true,
     }) previousClicked: EventEmitter;
 
+    @Event({
+        eventName: 'currentClicked',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+    }) currentClicked: EventEmitter;
+
+
+    @Event({
+        eventName: 'nextSetClicked',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+    }) nextSetClicked: EventEmitter;
+
+    @Event({
+        eventName: 'previousSetClicked',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+    }) previousSetClicked: EventEmitter;
 
     @Watch('pageSizes')
     fetchPageSizeOptions(newValue: Number[] | string) {
@@ -54,11 +83,35 @@ export class HabitatPagination {
 
 
     componentDidLoad() {
+        for (let page = 1; page < this.pageSize; page++) {
+            this._actualArrOnlyNumber.push(page);
 
-        this.nextSet(this.pageSize);
-        console.log("ComponentDidLoad gives ====>", this.pageSize);
+        }
+        this.paginatedResults();
+
+
+    }
+    componentWillRender() {
+        this.paginatedResults();
+        this.next();
+        this.previous();
     }
 
+    @Method()
+    async currentItem(currentItem) {
+        const nextRemaining = (this.totalItems / this.pageSize) - currentItem;
+        const listStart = 1;
+        const listEnd = this._pages.length - 2;
+        this.currentClicked.emit({
+            currentPage: currentItem,
+            listStart,
+            listEnd,
+            nextRemaining,
+            pageSize: this.pageSize,
+            pageSizes: this.pageSizes,
+            totalItems: this.totalItems
+        })
+    }
 
     @Method()
     async next() {
@@ -68,15 +121,16 @@ export class HabitatPagination {
 
         // console.log(" Next Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
         const nextRemaining = (this.totalItems / this.pageSize) - this.currentPage;
+        const listStart = 1;
         const listEnd = this._pages.length - 2;
         this.nextClicked.emit({
-            currentItem: this.currentPage,
+            currentPage: this.currentPage,
             nextRemaining,
+            listStart,
             listEnd,
             pageSize: this.pageSize,
             pageSizes: this.pageSizes,
             totalItems: this.totalItems
-
         })
     }
 
@@ -88,52 +142,70 @@ export class HabitatPagination {
         // console.log(" Previous Current ===> ", this.currentPage + " Total Page ===> ", this._pages.length - 2);
         const previousRemaining = this.currentPage - 1;
         const listStart = 1;
+        const listEnd = this._pages.length - 2;
         this.previousClicked.emit({
-            currentItem: this.currentPage,
+            currentPage: this.currentPage,
             previousRemaining,
             listStart,
+            listEnd,
             pageSize: this.pageSize,
             pageSizes: this.pageSizes,
             totalItems: this.totalItems
 
         })
+
     }
 
     // Table Pagination logic 
-    nextSet(_itemsPerPage) {
-        _itemsPerPage = this.pageSize;
-        console.log("_itemsPerPage ", _itemsPerPage);
-        console.log("this.pageSize ", this.pageSize);
-        for (let page = 1; page < _itemsPerPage; page++) {
-            this._actualArrOnlyNumber.push(page);
+    paginatedResults = () => {
+        let _begin = this.pageSize * (this.currentPage - 1);
+        let _end = this.pageSize * this.currentPage;
+        this._slicedRows = this._actualArrOnlyNumber.slice(_begin, _end);
+        this.startLength = _begin;
+        this.endLength = _end;
+        return this.results = (`Results : ${_begin + 1}  -  ${_end}  of  ${this.totalItems} `);
+    }
+    @Method()
+    async nextSet() {
+        this.currentPage++;
+        if (this.endLength < this.totalItems) {
+            this.paginatedResults();
         }
 
-        let _begin = _itemsPerPage * (this.currentPage - 1);
-        let _end = _itemsPerPage * this.currentPage;
-        let _slicedRows = [];
-        _slicedRows = this._actualArrOnlyNumber.slice(_begin, _end);
-        this.currentPage++;
-        console.log("Actual Arrays ", this._actualArrOnlyNumber);
-        console.log("Sliced Arrays ", _slicedRows);
-        console.log("Begin  ", _begin + 1, "End ", _end);
-        this.results = (`Results : ${_begin + 1}  -  ${_end}  of  ${this.totalItems}`);
-
-
+        this.nextSetClicked.emit({
+            currentPage: this.currentPage,
+            pageSize: this.pageSize,
+            pageSizes: this.pageSizes,
+            totalItems: this.totalItems,
+            pageBatchRange: `[${this.startLength + 1} - ${this.endLength}]`
+        })
     }
 
-    previousSet() {
+    @Method()
+    async previousSet() {
+        this.currentPage--;
+        console.log("Click Previous ", this.currentPage)
+        if (this.currentPage >= 1) {
+            this.paginatedResults();
 
+        }
+        this.nextSetClicked.emit({
+            currentPage: this.currentPage,
+            pageSize: this.pageSize,
+            pageSizes: this.pageSizes,
+            totalItems: this.totalItems,
+            pageBatchRange: `[${this.startLength + 1} - ${this.endLength}]`
+        })
     }
-    generateList(how_many) {
-
+    generateList = (how_many) => {
         if (how_many && how_many > 0) {
-            this._pages.push(<a onClick={() => this.previous()} class={this.currentPage === 1 ? 'isDisabled' : ''}>{this.backwardText}</a>);
+            this._pages.push(<a onClick={() => this.previous()} class={this.currentPage == 1 ? 'isDisabled' : ''}>{this.backwardText}</a>);
             for (let i = 1; i <= how_many; i++) {
                 if (i === this.currentPage) {
                     this._pages.push(<a class={(i === this.currentPage) ? 'active' : ''}>{i}</a>);
                 }
                 else {
-                    this._pages.push(<a>{i}</a>);
+                    this._pages.push(<a onClick={this.currentItem.bind(this, i)}>{i}</a>);
                 }
             };
             // console.log(this._pages.length - 1, " = ", this.currentPage);
@@ -148,11 +220,12 @@ export class HabitatPagination {
         this.generateList(this.noOfbuttons);
     }
 
-
     calculateRows(event) {
         this.pageSize = event.target.value;
-        this.nextSet(this.pageSize);
-        console.log(" This is from select ==>", this.pageSize);
+        this.currentPage = 1;
+        this.paginatedResults();
+
+        console.log("Triggered ==> selection change", this.pageSize);
     }
 
 
@@ -188,8 +261,8 @@ export class HabitatPagination {
                     <div class="results-area">
                         <div class="info-gap">{this.results}</div>
                         <div class="icon-placeholder">
-                            <span onClick={this.previousSet.bind(this)}>B</span>
-                            <span onClick={this.nextSet.bind(this)}>F</span>
+                            <button onClick={this.previousSet.bind(this)} disabled={this.currentPage == 1 ? true : false}>B</button>
+                            <button onClick={this.nextSet.bind(this)} disabled={this.endLength >= this.totalItems ? true : false}>F</button>
                         </div>
                     </div>
                 </div>)
