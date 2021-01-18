@@ -121,10 +121,12 @@ slot[name="helper"] {
   margin-top:5px;
   pointer-events: none !important;
  }
- slot[name="icon"] {
-  
+ slot[name="icon"] {  
   pointer-events: none !important;
  }
  slot[name="name"]{
   padding-left:10px;
+ }
+ slot[name="badge"]{
+  margin-left:10px;
  }

@@ -260,6 +260,8 @@ declare namespace LocalJSX {
     }
     interface TabH {
         "disabled"?: boolean;
+        "onLeftKeyPressed"?: (event: CustomEvent<any>) => void;
+        "onRightKeyPressed"?: (event: CustomEvent<any>) => void;
         "onSelectBtn"?: (event: CustomEvent<any>) => void;
         "selected"?: boolean;
         "type"?: string;

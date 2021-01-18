@@ -106,15 +106,6 @@
       font-style: italic;
       font-size: 16px;
     }
-
-    xmp {
-      background-color: #222;
-      color: #fff;
-      white-space: pre-wrap;
-      max-height: 494px;
-      padding: 20px;
-      font-size: 14px;
-    }
   </style>
 </head>
 
@@ -251,7 +242,7 @@
 
   </pre>-->
 
-  <!-- <h4 style="margin-top:100px">Default Tabs</h4>
+  <h4>Default Tabs</h4>
   <tabbing-ui type="default">
 
     <tab-h slot="tab" type="default" selected="true">
@@ -306,6 +297,7 @@
       </svg>
       <span slot="name">Facebook</span>
       <div slot="helper">Who are these people #$%^&*(</div>
+      <div slot="badge">Badge</div>
     </tab-h>
 
     <tab-h slot="tab" type="default">
@@ -514,7 +506,7 @@
       <div slot="helper">Disabled Text</div>
     </tab-h>
 
-  </tabbing-ui> -->
+  </tabbing-ui>
 
   <h4>Pagination -- type: Expanded</h4>
   <div>
@@ -522,7 +514,7 @@
       id="expanded">
     </h-pagination>
   </div>
-  <h4>Pagination -- type: Compact</h4>
+  <h4>Pagination -- type: Table</h4>
   <div style="width:500px">
     <h-pagination type="table" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1">
     </h-pagination>
@@ -537,29 +529,29 @@
 
   <script>
 
-    // document.querySelectorAll("tabbing-ui").forEach(tabs => {
-    //   tabs.addEventListener('tabSelect', (e) => {
-    //     console.log(e.detail);
-    //   })
+    document.querySelectorAll("tabbing-ui").forEach(tabs => {
+      tabs.addEventListener('leftKeyPressed', (e) => {
+        console.log(e );
+      })
+    });
+
+
+    // const paginationEle = document.querySelector("#expanded");
+
+    // paginationEle.addEventListener('previousClicked', (e) => {
+    //   e.stopImmediatePropagation();
+    //   console.log(e.detail);
+    // });
+    // paginationEle.addEventListener('currentClicked', (e) => {
+    //   e.stopImmediatePropagation();
+    //   console.log(e.detail);
     // });
 
+    // paginationEle.addEventListener('nextClicked', (e) => {
+    //   e.stopImmediatePropagation();
+    //   console.log(e.detail);
 
-    const paginationEle = document.querySelector("#expanded");
-
-    paginationEle.addEventListener('previousClicked', (e) => {
-      e.stopImmediatePropagation();
-      console.log(e.detail);
-    });
-    paginationEle.addEventListener('currentClicked', (e) => {
-      e.stopImmediatePropagation();
-      console.log(e.detail);
-    });
-
-    paginationEle.addEventListener('nextClicked', (e) => {
-      e.stopImmediatePropagation();
-      console.log(e.detail);
-
-    });
+    // });
 
     // paginationEle.addEventListener('nextSetClicked', (e) => {
     //   console.log(e.detail);

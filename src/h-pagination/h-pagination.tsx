@@ -235,7 +235,7 @@ export class HabitatPagination {
             this._pages.push(<a onClick={() => this.next()} class={this._pages.length - 1 === this.currentPage ? 'isDisabled' : ''}>{this.forwardText}</a>);
 
         }
-    }
+    }      
 
     componentWillLoad(): void {
         this.noOfbuttons = Math.ceil(this.totalItems / +this.pageSize);
