@@ -108,6 +108,19 @@
 button[disabled] {
   pointer-events: none;
   cursor: disabled;
-  opacity:0.5;
-  color:#e5e5e5;
+}
+select{
+  border: solid 2px #bdbdbd;
+  padding: 2px 5px;
+}
+button{
+  border:solid 1px #e5e5e5;
+  background:#e5e5e5;
+  padding:2px 7px;
+  margin-right:6px;
+  cursor: pointer;
+}
+
+button.noborder{
+  border: none;
 }

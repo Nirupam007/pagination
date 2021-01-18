@@ -98,6 +98,29 @@ export class HabitatPagination {
     }
 
     @Method()
+    async firstPage() {
+        this.currentPage = 1;
+    }
+    @Method()
+    async nextPage() {
+        if (this.currentPage < this.totalItems) {
+            this.currentPage += 1;
+        }
+    }
+
+    @Method()
+    async lastPage() {
+        this.currentPage = this.totalItems;
+    }
+
+    @Method()
+    async previousPage() {
+        if (this.currentPage >= 2) {
+            this.currentPage -= 1;
+        }
+    }
+
+    @Method()
     async currentItem(currentItem) {
         const nextRemaining = (this.totalItems / this.pageSize) - currentItem;
         const listStart = 1;
@@ -280,11 +303,11 @@ export class HabitatPagination {
                     </div>
                     <div class="results-area">
                         <div class="icon-placeholder">
-                            <span>BB</span>
-                            <span>B</span>
+                            <span >BB</span>
+                            <span >B</span>
                             <span class="count">{this.currentPage / this.totalItems}</span>
-                            <span>FF</span>
-                            <span>F</span>
+                            <span >FF</span>
+                            <span >F</span>
                         </div>
                     </div>
                 </div>)
@@ -293,11 +316,11 @@ export class HabitatPagination {
                 this.PaginationContainer = (<div class="table-compact">
                     <div class="results-area">
                         <div class="icon-placeholder">
-                            <span>BB</span>
-                            <span>B</span>
-                            <span class="count">1/100</span>
-                            <span>FF</span>
-                            <span>F</span>
+                            <button onClick={this.firstPage.bind(this)} disabled={this.currentPage == 1}>{`|<`}</button>
+                            <button onClick={this.previousPage.bind(this)} disabled={this.currentPage == 1}>{`<`}</button>
+                            <button class="count noborder">{`${this.currentPage} / ${this.totalItems}`}</button>
+                            <button onClick={this.nextPage.bind(this)} disabled={this.currentPage == this.totalItems}>{`>`}</button>
+                            <button onClick={this.lastPage.bind(this)} disabled={this.currentPage == this.totalItems}>{`>|`}</button>
                         </div>
                     </div>
                 </div>)

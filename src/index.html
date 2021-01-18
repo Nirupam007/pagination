@@ -102,8 +102,9 @@
     h4 {
       margin: 10px 5px;
       padding: 0 5px;
-      color: #666666;
+      color: #a5a5a5;
       font-style: italic;
+      font-size: 16px;
     }
 
     xmp {
@@ -132,14 +133,15 @@
 
 
 
-  <!-- <div style="width:500px">
-    <h-pagination type="default-text" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1"
-      id="default">
-    </h-pagination>
-  </div>
-
+  <!-- <h4>Pagination -- type: Table</h4>
   <div style="width:500px">
     <h-pagination type="table" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1" id="table">
+    </h-pagination>
+  </div>
+  <h4>Pagination -- type: Compact</h4>
+  <div style="width:500px">
+    <h-pagination type="compact" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1"
+      id="compact">
     </h-pagination>
   </div> -->
   <!-- <h-tabs>
@@ -249,7 +251,7 @@
 
   </pre>-->
 
-  <h4>Default Tabs</h4>
+  <!-- <h4 style="margin-top:100px">Default Tabs</h4>
   <tabbing-ui type="default">
 
     <tab-h slot="tab" type="default" selected="true">
@@ -282,14 +284,14 @@
   <tabbing-ui type="default">
 
     <tab-h slot="tab" type="default" selected="true">
-      <div slot="helper">Helper Text</div>
+
       <svg slot="icon" enable-background="new 0 0 24 24" height="18px" viewBox="0 0 24 24" width="18px"
         xmlns="http://www.w3.org/2000/svg">
         <path
           d="m12.636 0c.828.633 3.567 3.326 5.444 6.287 1.303 2.056 2.305 4.33 2.75 6.731.33 1.769.39 4.005-.156 5.643-1.177 3.649-3.516 4.965-7.288 5.276-8.955.666-12.554-4.655-9.26-11.73 1.272-2.709 3.663-5.535 3.941-5.702-.026 1.375.287 2.614 1.173 3.68.025.031.044.075.09.081 1.995-1.498 3.458-3.193 3.839-5.692.238-1.535.033-3.131-.533-4.574z"
           fill="#ec407a" />
       </svg>
-
+      <div slot="helper">Helper Text</div>
       <span slot="name">Tinder</span>
     </tab-h>
 
@@ -420,7 +422,7 @@
     <tab-h slot="tab" type="container" selected="true" id="micro">
 
 
-      <div slot="helper">Dating...with impossible people</div>
+      <div slot="helper">Dating...some long text description to see</div>
       <svg slot="icon" enable-background="new 0 0 24 24" height="18px" viewBox="0 0 24 24" width="18px"
         xmlns="http://www.w3.org/2000/svg">
         <path
@@ -512,33 +514,52 @@
       <div slot="helper">Disabled Text</div>
     </tab-h>
 
-  </tabbing-ui>
+  </tabbing-ui> -->
 
+  <h4>Pagination -- type: Expanded</h4>
+  <div>
+    <h-pagination type="expanded" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1"
+      id="expanded">
+    </h-pagination>
+  </div>
+  <h4>Pagination -- type: Compact</h4>
+  <div style="width:500px">
+    <h-pagination type="table" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1">
+    </h-pagination>
+  </div>
 
+  <h4>Pagination -- type: Compact</h4>
+  <div style="width:500px">
+    <h-pagination type="compact" page-sizes="[10,20,30,40]" total-items="200" page-size="10" current-page="1">
+    </h-pagination>
+  </div>
 
 
   <script>
 
-    document.querySelectorAll("tabbing-ui").forEach(tabs => {
-      tabs.addEventListener('tabSelect', (e) => {
-        console.log(e.detail);
-      })
+    // document.querySelectorAll("tabbing-ui").forEach(tabs => {
+    //   tabs.addEventListener('tabSelect', (e) => {
+    //     console.log(e.detail);
+    //   })
+    // });
+
+
+    const paginationEle = document.querySelector("#expanded");
+
+    paginationEle.addEventListener('previousClicked', (e) => {
+      e.stopImmediatePropagation();
+      console.log(e.detail);
+    });
+    paginationEle.addEventListener('currentClicked', (e) => {
+      e.stopImmediatePropagation();
+      console.log(e.detail);
     });
 
+    paginationEle.addEventListener('nextClicked', (e) => {
+      e.stopImmediatePropagation();
+      console.log(e.detail);
 
-    //const paginationEle = document.querySelector("#table");
-
-    // paginationEle.addEventListener('previousClicked', (e) => {
-    //   console.log(e.detail);
-    // });
-    // paginationEle.addEventListener('currentClicked', (e) => {
-    //   console.log(e.detail);
-    // });
-
-    // paginationEle.addEventListener('nextClicked', (e) => {
-    //   console.log(e.detail);
-
-    // });
+    });
 
     // paginationEle.addEventListener('nextSetClicked', (e) => {
     //   console.log(e.detail);

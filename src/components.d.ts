@@ -13,12 +13,16 @@ export namespace Components {
         "currentItem": (currentItem: any) => Promise<void>;
         "currentPage": number;
         "disabled": boolean;
+        "firstPage": () => Promise<void>;
         "forwardText": string;
+        "lastPage": () => Promise<void>;
         "next": () => Promise<void>;
+        "nextPage": () => Promise<void>;
         "nextSet": () => Promise<void>;
         "pageSize": number;
         "pageSizes": Number[] | string;
         "previous": () => Promise<void>;
+        "previousPage": () => Promise<void>;
         "previousSet": () => Promise<void>;
         "totalItems": number;
         "type": string;
